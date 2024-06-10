@@ -34,12 +34,6 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: yarn bundle
-
-      - name: Tag
-        if: startsWith(github.ref, 'refs/heads/release/')
-        run: |
-          git tag "v$env:GitVersion_SemVer"
-          git push origin "v$env:GitVersion_SemVer"
           
       - name: Create Release
         id: create_release
