@@ -27,24 +27,44 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Extract Version Name
-        run: echo "##[set-output name=version;]$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
-        id: extract_version_name
-
       - run: yarn install
       - run: yarn build
       - run: yarn bundle
 
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: |
-            dist/url-downloader.exe
-          tag_name: ${{ steps.extract_version_name.outputs.version }}
-          release_name: ${{ steps.extract_version_name.outputs.version }}
-          body: ${{ github.sha }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./dist/url-downloader.exe
+          asset_name: url-downloader.exe
+          asset_content_type: application/octet-stream
+          
+  create_release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/url-downloader.exe
+          asset_name: url-downloader.exe
+          asset_content_type: application/octet-stream
