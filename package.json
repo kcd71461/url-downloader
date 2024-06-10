@@ -1,0 +1,22 @@
+{
+  "name": "url-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "tsc",
+    "bundle": "pkg ./dist/index.js --targets node18-win-x64 --out-path ./dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/xlsx": "^0.0.36",
+    "pkg": "^5.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

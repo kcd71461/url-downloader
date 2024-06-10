@@ -1,0 +1,19 @@
+# Ignore build output directories
+/dist/
+
+# Ignore package manager directories
+/node_modules/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*.bak
+
+# Ignore setting.json
+setting.json
