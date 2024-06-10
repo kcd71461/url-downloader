@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "build": "tsc",
-    "bundle": "pkg ./dist/index.js --targets node18-win-x64 --out-path ./dist"
+    "bundle": "pkg ./dist/index.js --targets node18-win-x64 --output ./dist/url-downloader"
   },
   "keywords": [],
   "author": "",
